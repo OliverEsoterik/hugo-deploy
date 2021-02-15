@@ -1,6 +1,6 @@
 baseURL = ""
 languageCode = "en-us"
-title = "Storage & Computing"
+title = "Title"
 theme = "hugo-book"
 
 [params]
