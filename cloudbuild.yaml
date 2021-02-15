@@ -1,0 +1,32 @@
+steps:
+# Build docker image on PR or master
+- name: 'gcr.io/cloud-builders/docker'
+  args: [
+    'build', 
+    '-t', 'eu.gcr.io/$PROJECT_ID/image:$COMMIT_SHA',
+    '--cache-from', 'eu.gcr.io/$PROJECT_ID/image:$COMMIT_SHA',
+    '.'
+    ]
+
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'eu.gcr.io/$PROJECT_ID/image:$COMMIT_SHA']
+
+  # Push as latest only on master branch
+- name: 'gcr.io/cloud-builders/docker'
+  entrypoint: '/bin/bash'
+  args:
+    - '-c'
+    - |
+      if [[ "$BRANCH_NAME" == "master" ]]; then
+      docker tag eu.gcr.io/$PROJECT_ID/image:$COMMIT_SHA eu.gcr.io/$PROJECT_ID/image:latest
+      docker push eu.gcr.io/$PROJECT_ID/clp-gov-infra:latest
+      fi
+
+  # New K8s Deplaoyment
+- name: 'gcr.io/cloud-builders/kubectl'
+  id: Deploy
+  entrypoint: '/deployment'
+  args:
+  - 'apply'
+  - '-f'
+  - 'deploy.yaml'

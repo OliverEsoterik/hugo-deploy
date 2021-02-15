@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: documentation
+  labels:
+    app: documentation
+spec:
+  type: NodePort
+  ports:
+  - port: 1313
+    targetPort: 1313
+    protocol: TCP
+    name: http
+  selector:
+    app: documentation

@@ -1,0 +1,9 @@
+baseURL = ""
+languageCode = "en-us"
+title = "Storage & Computing"
+theme = "hugo-book"
+
+[params]
+
+BookMenuBundle = '/menu'
+BookSearch = false
