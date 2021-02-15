@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: documentation
+  labels:
+    app: documentation
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: documentation
+  template:
+    metadata:
+      labels:
+        app: documentation
+    spec:
+      containers:
+      - name: documentation
+        image:  "eu.gcr.io/${module.project.project_id}/documentation:latest"
+        ports:
+        - containerPort: 1313
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 1313
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 1313        
+            

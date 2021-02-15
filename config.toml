@@ -1,0 +1,9 @@
+baseURL = ""
+languageCode = "en-us"
+title = "Title"
+theme = "hugo-book"
+
+[params]
+
+BookMenuBundle = '/menu'
+BookSearch = false
